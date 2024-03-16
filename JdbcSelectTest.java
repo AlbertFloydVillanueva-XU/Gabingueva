@@ -6,7 +6,7 @@ public class JdbcSelectTest {   // Save as "JdbcSelectTest.java"
          // Step 1: Construct a database 'Connection' object called 'conn'
          Connection conn = DriverManager.getConnection(
                "jdbc:mysql://127.0.0.1:3306/ebookshop",
-               "root", "AFV-Xavier1");   // For MySQL only
+               "Gabing", "noob");   // For MySQL only
                // The format is: "jdbc:mysql://hostname:port/databaseName", "username", "password"
  
          // Step 2: Construct a 'Statement' object called 'stmt' inside the Connection created
