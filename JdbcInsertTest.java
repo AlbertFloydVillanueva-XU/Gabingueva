@@ -1,4 +1,12 @@
-
+import java.sql.*;     // Use classes in java.sql package
+ 
+public class JdbcInsertTest {    // Save as "JdbcUpdateTest.java"
+   public static void main(String[] args) {
+      try (
+         // Step 1: Allocate a database 'Connection' object
+         Connection conn = DriverManager.getConnection(
+               "jdbc:mysql://localhost:3306/ebookshop?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
+               "myuser", "xxxx"); // for MySQL only
  
          // Step 2: Allocate a 'Statement' object in the Connection
          Statement stmt = conn.createStatement();
