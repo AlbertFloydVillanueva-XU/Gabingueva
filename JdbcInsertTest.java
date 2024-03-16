@@ -6,7 +6,7 @@ public class JdbcInsertTest {    // Save as "JdbcUpdateTest.java"
          // Step 1: Allocate a database 'Connection' object
          Connection conn = DriverManager.getConnection(
                "jdbc:mysql://localhost:3306/ebookshop?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
-               "myuser", "xxxx"); // for MySQL only
+               "myUser", "1234"); // for MySQL only
  
          // Step 2: Allocate a 'Statement' object in the Connection
          Statement stmt = conn.createStatement();
