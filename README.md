@@ -24,6 +24,7 @@ change the directory to the location of your MYSQL folder
 
 Then run the your server
 >mysqld --console
+
 If your server is starting and good to go, leave it for now.
 
 SECOND STEP is to launch your MYSQL Database
@@ -39,12 +40,14 @@ Enter password: (enter your password)
 If your mysql is good and running then create the database
 
 THIRD STEP
+
 CREATE DATABASE invoicesystem;
 
 Use the database
 >use invoicesystem;
 
 FOURTH STEP
+
 2ND STEP
 Input this lines of code to create the tables and columns of your database.
 
