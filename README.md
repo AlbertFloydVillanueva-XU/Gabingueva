@@ -14,8 +14,11 @@ SECOND STEP is to launch your MYSQL Database
 Open another CMD
 change the directory to the location of your MYSQL folder
 >cd (your file path of mysql)
+
 launch your mysql server using your user name and input the password of it
+
 >mysql -u (your username) -p
+
 Enter password: (enter your password)
 If your mysql is good and running then create the database
 
