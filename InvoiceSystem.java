@@ -9,6 +9,8 @@ public class InvoiceSystem {
         return scanner.nextLine();
     }
 
+    //Service Management Methods
+
     public static void addService(Connection conn) {
         try {
             System.out.println("Enter service name:");
@@ -71,21 +73,39 @@ public class InvoiceSystem {
 
     public static void deleteService(Connection conn) {
         try {
-            System.out.println("Enter service name to delete:");
-            String name = scan();
-            String sqlDelete = "DELETE FROM services WHERE name = ?";
+            System.out.println("Enter service ID to delete:");
+            int id = Integer.parseInt(scan());
+            String sqlDelete = "DELETE FROM services WHERE id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sqlDelete);
-            pstmt.setString(1, name);
+            pstmt.setInt(1, id);
             int rowsDeleted = pstmt.executeUpdate();
             if (rowsDeleted > 0) {
                 System.out.println("Service deleted successfully!");
+                // Update remaining service IDs if necessary
+                updateServiceIDs(conn);
             } else {
-                System.out.println("Service name not found.");
+                System.out.println("Service ID not found.");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
+    
+    private static void updateServiceIDs(Connection conn) {
+        try {
+            // Update remaining service IDs
+            String sqlUpdateIDs = "UPDATE services SET id = id - 1 WHERE id > ?";
+            PreparedStatement pstmt = conn.prepareStatement(sqlUpdateIDs);
+            pstmt.setInt(1, 1); // Start from ID 1
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Service IDs updated successfully!");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     // Client Management Methods
 
     
@@ -99,8 +119,25 @@ public class InvoiceSystem {
             int rowsDeleted = pstmt.executeUpdate();
             if (rowsDeleted > 0) {
                 System.out.println("Client deleted successfully!");
+                // Update remaining client IDs if necessary
+                updateClientIDs(conn);
             } else {
                 System.out.println("Client ID not found.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private static void updateClientIDs(Connection conn) {
+        try {
+            // Update remaining client IDs
+            String sqlUpdateIDs = "UPDATE clients SET id = id - 1 WHERE id > ?";
+            PreparedStatement pstmt = conn.prepareStatement(sqlUpdateIDs);
+            pstmt.setInt(1, 1); // Start from ID 1
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Client IDs updated successfully!");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -179,6 +216,8 @@ public class InvoiceSystem {
             int rowsDeleted = pstmt.executeUpdate();
             if (rowsDeleted > 0) {
                 System.out.println("Invoice deleted successfully!");
+                // Update remaining invoice IDs if necessary
+                updateInvoiceIDs(conn);
             } else {
                 System.out.println("Invoice ID not found.");
             }
@@ -186,6 +225,22 @@ public class InvoiceSystem {
             ex.printStackTrace();
         }
     }
+    
+    private static void updateInvoiceIDs(Connection conn) {
+        try {
+            // Update remaining invoice IDs
+            String sqlUpdateIDs = "UPDATE invoices SET id = id - 1 WHERE id > ?";
+            PreparedStatement pstmt = conn.prepareStatement(sqlUpdateIDs);
+            pstmt.setInt(1, 1); // Start from ID 1
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Invoice IDs updated successfully!");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
 
     public static void editInvoice(Connection conn) {
         try {
@@ -289,67 +344,124 @@ public class InvoiceSystem {
         }
     }
 
-    // Selection Method
+    //Choices Methods
 
-    public static void selection(Connection conn) {
+    public static void ServiceChoice(Connection conn) {
+        System.out.println("[1] Add Service");
+        System.out.println("[2] View Service");
+        System.out.println("[3] Edit Service");
+        System.out.println("[4] Delete Service");
+        System.out.println("[5] Go back");
+        System.out.println("[6] Exit");
         String loginSelection = scan();
         if (loginSelection.equals("1")) {
             addService(conn);
-        } else if (loginSelection.equals("2")) {
+    } else if (loginSelection.equals("2")) {
             viewService(conn);
-        } else if (loginSelection.equals("3")) {
+    } else if (loginSelection.equals("3")) {
             editService(conn);
-        } else if (loginSelection.equals("4")) {
+    } else if (loginSelection.equals("4")) {
             deleteService(conn);
-        } else if (loginSelection.equals("5")) {
-            addClient(conn);
-        } else if (loginSelection.equals("6")) {
-            viewClient(conn);
-        } else if (loginSelection.equals("7")) {
-            editClient(conn);
-        } else if (loginSelection.equals("8")) {
-            deleteClient(conn);
-        } else if (loginSelection.equals("9")) {
-            addInvoice(conn);
-        } else if (loginSelection.equals("10")) {
-            viewInvoice(conn);
-        } else if (loginSelection.equals("11")) {
-            editInvoice(conn);
-        } else if (loginSelection.equals("12")) {
-            deleteInvoice(conn);
-        } else if (loginSelection.equals("13")) {
+    } else if (loginSelection.equals("5")) {
+            selection2(conn);    
+    } else if (loginSelection.equals("6")) {
+            System.out.println("Quit.");
+            System.exit(0);  
+    }  else {
+        System.out.println("Wrong input. Please input from the selection above.");
+        selection2(conn);
+    }
+}
+
+    public static void ClientChoice(Connection conn) {
+        System.out.println("[1] Add Client ");
+        System.out.println("[2] View Client");
+        System.out.println("[3] Edit Client");
+        System.out.println("[4] Delete Client");
+        System.out.println("[5] Go back");
+        System.out.println("[6] Exit");
+        String loginSelection = scan();
+    if (loginSelection.equals("1")) {
+        addClient(conn);
+    } else if (loginSelection.equals("2")) {
+        viewClient(conn);
+    } else if (loginSelection.equals("3")) {
+        editClient(conn);
+    } else if (loginSelection.equals("4")) {
+        deleteClient(conn);
+    } else if (loginSelection.equals("5")) {
+        selection2(conn); 
+    } else if (loginSelection.equals("6")) {
+        System.out.println("Quit.");
+        System.exit(0); 
+    }  else {
+        System.out.println("Wrong input. Please input from the selection above.");
+        selection2(conn);
+    }
+}
+    public static void InvoiceChoice(Connection conn) {
+        System.out.println("[1] Add Invoice");
+        System.out.println("[2] View Invoice");
+        System.out.println("[3] Edit Invoice");
+        System.out.println("[4] Delete Invoice");
+        System.out.println("[5] Go back");
+        System.out.println("[6] Exit");
+    String loginSelection = scan();
+    if (loginSelection.equals("1")) {
+        addInvoice(conn);
+    } else if (loginSelection.equals("2")) {
+        viewInvoice(conn);
+    } else if (loginSelection.equals("3")) {
+        editInvoice(conn);
+    } else if (loginSelection.equals("4")) {
+        deleteInvoice(conn);
+    } else if (loginSelection.equals("5")) {
+        selection2(conn); 
+    } else if (loginSelection.equals("6")) {
+        System.out.println("Quit.");
+        System.exit(0); 
+    }  else {
+        System.out.println("Wrong input. Please input from the selection above.");
+        selection2(conn);
+    }
+}
+
+public static void selection2(Connection conn) {
+    while (true) {
+        System.out.println("Input the desired number:");
+        System.out.println("[1] Service Management");
+        System.out.println("[2] Client Management");
+        System.out.println("[3] Invoice Management");
+        System.out.println("[4] View Total Billed Amount for Each Client");
+        System.out.println("[5] View All Invoices for a Particular Client");
+        System.out.println("[6] Exit");
+        
+        String loginSelection = scan();
+        if (loginSelection.equals("1")) {
+            ServiceChoice(conn);
+        } else if (loginSelection.equals("2")) {
+            ClientChoice(conn);
+        } else if (loginSelection.equals("3")) {
+            InvoiceChoice(conn);
+        } else if (loginSelection.equals("4")) {
             viewTotalBilledAmount(conn);
-        } else if (loginSelection.equals("14")) {
+        } else if (loginSelection.equals("5")) {
             viewAllInvoicesForClient(conn);
-        } else if (loginSelection.equals("15")) {
+        } else if (loginSelection.equals("6")) {
             System.out.println("Quit.");
             System.exit(0);
         } else {
             System.out.println("Wrong input. Please input from the selection above.");
-            selection(conn);
         }
     }
-    
-    // Intro Method
-
-    public static void intro(Connection conn) {
-        while (true) {
-            System.out.println("Choices \n [1] - Add Service [2] - View Service [3] - Edit Service [4] - Delete Service" +
-                    " [5] - Add Client [6] - View Client [7] - Edit Client [8] - Delete Client" +
-                    " [9] - Add Invoice [10] - View Invoice [11] - Edit Invoice [12] - Delete Invoice" +
-                    " [13] - View Total Billed Amount for Each Client [14] - View All Invoices for a Particular Client" +
-                    " [16] - Exit");
-            selection(conn);
-        }
-    }
-
+}
     // Main Method
 
     public static void main(String[] args) {
         try (Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/ebookshop?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
+                "jdbc:mysql://localhost:3306/invoicesystem",
                 "myUser", "1234")) {
-            intro(conn);
+            selection2(conn);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
