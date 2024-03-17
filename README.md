@@ -47,8 +47,6 @@ Use the database
 >use invoicesystem;
 
 FOURTH STEP
-
-2ND STEP
 Input this lines of code to create the tables and columns of your database.
 
 CREATE TABLE clients (
