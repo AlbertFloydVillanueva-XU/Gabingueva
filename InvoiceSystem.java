@@ -348,7 +348,7 @@ public class InvoiceSystem {
     public static void main(String[] args) {
         try (Connection conn = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/ebookshop?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC",
-                "Gabing", "noob")) {
+                "myUser", "1234")) {
             intro(conn);
         } catch (SQLException ex) {
             ex.printStackTrace();
