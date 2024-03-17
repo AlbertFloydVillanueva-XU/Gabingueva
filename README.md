@@ -31,6 +31,7 @@ Use the database
 FOURTH STEP
 2ND STEP
 Input this lines of code to create the tables and columns of your database.
+
 CREATE TABLE clients (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255),
